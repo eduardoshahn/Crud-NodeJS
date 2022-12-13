@@ -5,6 +5,8 @@ import {
   getAll, createUser, deleteUser, updateUser,
 } from '../controllers/usuario.controller';
 
+require('dotenv').config();
+
 const routes = new Router();
 
 routes.get('/', (req, res) => {

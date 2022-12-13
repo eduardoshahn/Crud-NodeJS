@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 
-const SECRET = 'paranguaricutirimiruarum';
+const { SECRET } = process.env;
 
 function verifyToken(req, res, next) {
   const token = req.headers.authorization;

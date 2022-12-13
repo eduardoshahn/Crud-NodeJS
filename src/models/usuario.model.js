@@ -2,8 +2,6 @@ import { ObjectId } from 'mongodb';
 import jwt from 'jsonwebtoken';
 import connection from './mongoConnection';
 
-const SECRET = 'paranguaricutirimiruarum';
-
 const getAll = async () => {
   const db = await connection();
   return db.collection('usuarios').find().toArray();
@@ -58,7 +56,7 @@ const requestLogin = async (req, res) => {
       userId: _id,
       email,
     },
-    SECRET,
+    process.env.SECRET,
     {
       expiresIn: 1440,
     },
