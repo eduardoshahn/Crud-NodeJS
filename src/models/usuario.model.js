@@ -10,8 +10,8 @@ const getAll = async () => {
 const newUser = async ({ email, senha }) => {
   const db = await connection();
   const user = await db.collection('usuarios').insertOne({ email, senha });
-  const { insertedId: id } = user;
-  return { email, _id: id };
+  const { insertedId: _id } = user;
+  return { email, _id };
 };
 
 const userExists = async ({ email, id }) => {
