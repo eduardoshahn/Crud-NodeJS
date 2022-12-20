@@ -1,13 +1,11 @@
-import { Router } from 'express';
+import express from 'express';
 import { requestLogin } from '../models/usuario.model';
 import verifyToken from '../middleware/usuarios.middleware';
 import {
   getAll, createUser, deleteUser, updateUser,
 } from '../controllers/usuario.controller';
 
-require('dotenv').config();
-
-const routes = new Router();
+const routes = new express.Router();
 
 routes.get('/', (req, res) => {
   res.status(200).json({ ok: 'conected' });
@@ -17,7 +15,7 @@ routes.get('/usuario', verifyToken, getAll);
 
 routes.get('/login', requestLogin);
 
-routes.post('/usuario', verifyToken, createUser);
+routes.post('/usuario', createUser);
 
 routes.delete('/usuario/:id', verifyToken, deleteUser);
 

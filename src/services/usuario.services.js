@@ -1,3 +1,4 @@
+import { hash } from 'bcrypt';
 import {
   getAll, newUser, userExists, deleta, update,
 } from '../models/usuario.model';
@@ -12,7 +13,9 @@ const criar = async ({ email, senha }) => {
 
   if (usuario) return usuario;
 
-  const user = await newUser({ email, senha });
+  const passwordHash = await hash(senha, 8);
+
+  const user = await newUser({ email, senha: passwordHash });
   return user;
 };
 
@@ -28,7 +31,9 @@ const atualizar = async ({ id, email, senha }) => {
   const usuario = await userExists({ id });
   if (!usuario) return { message: 'User not found' };
 
-  const user = await update({ id, email, senha });
+  const passwordHash = await hash(senha, 8);
+
+  const user = await update({ id, email, senha: passwordHash });
   return user;
 };
 

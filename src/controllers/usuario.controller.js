@@ -19,7 +19,6 @@ const getAll = async (req, res) => {
 
 const createUser = async (req, res) => {
   const { email, senha } = req.body;
-
   const { email: mail, _id } = await criar({ email, senha });
   return res.status(200).json({ mail, _id });
 };
@@ -34,7 +33,6 @@ const deleteUser = async (req, res) => {
 const updateUser = async (req, res) => {
   const { email, senha } = req.body;
   const { id } = req.params;
-
   const user = await atualizar({ id, email, senha });
   res.status(200).json(user);
 };
