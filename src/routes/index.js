@@ -1,24 +1,26 @@
-import express from 'express';
-import { requestLogin } from '../models/usuario.model';
+/* eslint-disable max-len */ /* eslint-disable import/no-cycle */ /* eslint-disable max-len */ /* eslint-disable consistent-return */ /* eslint-disable no-return-assign */ /* eslint-disable no-param-reassign */ /* eslint-disable arrow-parens */ /* eslint-disable no-shadow */ /* eslint-disable import/no-import-module-exports */
+
 import verifyToken from '../middleware/usuarios.middleware';
 import {
-  getAll, createUser, deleteUser, updateUser,
+  controllerRead, controllerCreate, controllerDelete, controllerUpdate, login,
 } from '../controllers/usuario.controller';
 
-const routes = new express.Router();
+const express = require('express');
+
+const routes = express();
 
 routes.get('/', (req, res) => {
-  res.status(200).json({ ok: 'conected' });
+  res.send({ message: 'Hello World' });
 });
 
-routes.get('/usuario', verifyToken, getAll);
+routes.get('/usuario', verifyToken, controllerRead);
 
-routes.get('/login', requestLogin);
+routes.get('/login', login);
 
-routes.post('/usuario', createUser);
+routes.post('/usuario', controllerCreate);
 
-routes.delete('/usuario/:id', verifyToken, deleteUser);
+routes.delete('/usuario/:id', verifyToken, controllerDelete);
 
-routes.put('/usuario/:id', verifyToken, updateUser);
+routes.put('/usuario/:id', verifyToken, controllerUpdate);
 
-export default routes;
+module.exports = routes;

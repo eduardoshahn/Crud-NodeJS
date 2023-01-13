@@ -5,6 +5,7 @@
  */
 
 module.exports = {
+
   // All imported modules in your tests should be mocked automatically
   // automock: false,
 
@@ -155,10 +156,9 @@ module.exports = {
   // testLocationInResults: false,
 
   // The glob patterns Jest uses to detect test files
-  // testMatch: [
-  //  '**/__tests__/**/*.spec.js?(x)',
-  //   "**/?(*.)+(spec|test).[tj]s?(x)"
-  // ],
+  testMatch: [
+    '**/*.spec.js',
+  ],
 
   // eslint-disable-next-line max-len
   // An array of regexp pattern strings that are matched against all test paths, matched tests are skipped

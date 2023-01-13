@@ -1,44 +1,51 @@
+/* eslint-disable max-len *//* eslint-disable import/no-mutable-exports *//* eslint-disable no-var *//* eslint-disable import/no-cycle */ /* eslint-disable no-unused-vars */
 import { hash } from 'bcrypt';
-import {
-  getAll, newUser, userExists, deleta, update,
-} from '../models/usuario.model';
+import UserModel from '../models/usuario.model';
 
-const todos = async () => {
-  const users = await getAll();
+var usersAuth = [];
+
+const serviceRead = async () => {
+  const users = await UserModel.modelRead();
   return users;
 };
 
-const criar = async ({ email, senha }) => {
-  const usuario = await userExists({ email });
+const serviceCreate = async ({ email, pwd }) => {
+  const user = await UserModel.userExists({ email });
+  if (user) {
+    return { user };
+  }
+  const createdUser = await UserModel.modelCreate({ email, senha: pwd });
+  usersAuth.push(createdUser);
 
-  if (usuario) return usuario;
+  return { success: true, user: createdUser };
+};
+
+const serviceDelete = async ({ id }) => {
+  const usuario = await UserModel.userExists({ id });
+
+  if (!usuario) return { message: 'User not found' };
+  const user = await UserModel.modelDelete({ id });
+  return user;
+};
+
+const serviceUpdate = async ({ id, email, senha }) => {
+  const usuario = await UserModel.userExists({ id });
+  if (!usuario) return { message: 'User not found' };
 
   const passwordHash = await hash(senha, 8);
 
-  const user = await newUser({ email, senha: passwordHash });
+  const user = await UserModel.modelUpdate({
+    id,
+    email,
+    senha: passwordHash,
+  });
   return user;
 };
 
-const deletar = async ({ id }) => {
-  const usuario = await userExists({ id });
-
-  if (!usuario) return { message: 'User not found' };
-  const user = await deleta({ id });
-  return user;
-};
-
-const atualizar = async ({ id, email, senha }) => {
-  const usuario = await userExists({ id });
-  if (!usuario) return { message: 'User not found' };
-
-  const passwordHash = await hash(senha, 8);
-
-  const user = await update({ id, email, senha: passwordHash });
-  return user;
-};
+const allUsersCreated = usersAuth;
 
 const login = async () => null;
 
 export {
-  todos, login, criar, deletar, atualizar,
+  serviceRead, login, serviceCreate, serviceDelete, serviceUpdate, allUsersCreated,
 };
