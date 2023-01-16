@@ -2,7 +2,7 @@
 import { hash } from 'bcrypt';
 import UserModel from '../models/usuario.model';
 
-var usersAuth = [];
+const catchUsers = [UserModel.catchUsers];
 
 const serviceRead = async () => {
   const users = await UserModel.modelRead();
@@ -15,7 +15,6 @@ const serviceCreate = async ({ email, pwd }) => {
     return { user };
   }
   const createdUser = await UserModel.modelCreate({ email, senha: pwd });
-  usersAuth.push(createdUser);
 
   return { success: true, user: createdUser };
 };
@@ -42,10 +41,8 @@ const serviceUpdate = async ({ id, email, senha }) => {
   return user;
 };
 
-const allUsersCreated = usersAuth;
-
 const login = async () => null;
 
 export {
-  serviceRead, login, serviceCreate, serviceDelete, serviceUpdate, allUsersCreated,
+  serviceRead, login, serviceCreate, serviceDelete, serviceUpdate, catchUsers,
 };

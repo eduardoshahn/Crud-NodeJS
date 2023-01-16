@@ -1,8 +1,12 @@
-/* eslint-disable no-sequences */
-/* eslint-disable no-use-before-define */
+/* eslint-disable prefer-arrow-callback *//* eslint-disable func-names */
+/* eslint-disable space-before-function-paren *//* eslint-disable no-unused-vars */
+/* eslint-disable no-console *//* eslint-disable no-shadow */
+/* eslint-disable no-sequences *//* eslint-disable no-use-before-define */
 import { hash } from 'bcrypt';
 import { ObjectId } from 'mongodb';
 import connection from './mongoConnection';
+
+const { MongoClient } = require('mongodb');
 
 const modelRead = async () => {
   const db = await connection();
