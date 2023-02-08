@@ -2,7 +2,7 @@
 
 import verifyToken from '../middleware/usuarios.middleware';
 import {
-  controllerRead, controllerCreate, controllerDelete, controllerUpdate, login, authCreate, authLogin,
+  controllerRead, controllerCreate, controllerDelete, controllerUpdate, login, authLogin,
 } from '../controllers/usuario.controller';
 
 const express = require('express');
@@ -17,7 +17,7 @@ routes.get('/usuario', verifyToken, controllerRead);
 
 routes.post('/usuario/login', authLogin, login);
 
-routes.post('/usuario', authCreate, controllerCreate);
+routes.post('/usuario', controllerCreate);
 
 routes.delete('/usuario/:id', verifyToken, controllerDelete);
 

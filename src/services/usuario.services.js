@@ -1,12 +1,10 @@
-/* eslint-disable max-len *//* eslint-disable import/no-mutable-exports *//* eslint-disable no-var *//* eslint-disable import/no-cycle */ /* eslint-disable no-unused-vars */
+/* eslint-disable max-len *//* eslint-disable import/no-named-as-default *//* eslint-disable max-len *//* eslint-disable import/no-mutable-exports *//* eslint-disable no-var *//* eslint-disable import/no-cycle */ /* eslint-disable no-unused-vars */
 import { hash } from 'bcrypt';
 import UserModel from '../models/usuario.model';
 
-const catchUsers = [UserModel.catchUsers];
-
 const serviceRead = async () => {
-  const users = await UserModel.modelRead();
-  return users;
+  const user = await UserModel.modelRead();
+  return user;
 };
 
 const serviceCreate = async ({ email, pwd }) => {
@@ -41,8 +39,13 @@ const serviceUpdate = async ({ id, email, senha }) => {
   return user;
 };
 
-const login = async () => null;
+const serviceLogin = async ({ email, senha }) => {
+  const user = await UserModel.userExists({ email });
+  if (!user) return user;
+
+  return user;
+};
 
 export {
-  serviceRead, login, serviceCreate, serviceDelete, serviceUpdate, catchUsers,
+  serviceRead, serviceLogin, serviceCreate, serviceDelete, serviceUpdate,
 };
